@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 project(CNNpp VERSION 0.0.1)
 
 # TODO: train + predict exec
-add_executable(test src/main.cpp)
+add_executable(dev src/main.cpp)
 
 
 # add dependencies (CPM)
@@ -23,5 +23,5 @@ CPMAddPackage(
     GIT_TAG v0.9.7
 )
 
-target_link_libraries(test PUBLIC xtensor)
+target_link_libraries(dev PUBLIC xtensor)
 # target_link_libraries(CNN PUBLIC magic_enum)
