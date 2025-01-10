@@ -2,39 +2,30 @@
 #define ENGINE_HPP_
 
 // #include "xtensor/xtensor_forward.hpp"
-#include "utils.hpp"
 #include <iostream>
 #include <memory>
 #include <xtensor.hpp>
 #include <functional>
 #include <vector>
 #include <tuple>
+#include "utils.hpp"
 
 
 namespace cnn {
+    // layer
     class Layer {
     public:
         // TODO: set xarray dims
         Layer() = default;
-        Layer(size_t in_dim, size_t out_dim, std::function<double(float)> activation) 
-        : in_dim{in_dim}, out_dim{out_dim}, activation{activation} {
-            // TODO set backprop
-            std::cout << "\nALERT: backprop not set\n";
-        }
+        ~Layer();
         
-        Layer(size_t in_dim, size_t out_dim, Activation activation) 
-        : in_dim{in_dim}, out_dim{out_dim} {
-            this->activation = actutils::activation.at(activation);
-            this->backprop = actutils::backprop.at(activation);
-        }
+        Layer(size_t in_dim, size_t out_dim, std::function<double(float)> activation);
+        
+        Layer(size_t in_dim, size_t out_dim, Activation activation);
 
-        std::tuple<size_t, size_t> getDimensions() const {
-            return std::tuple<size_t, size_t>{in_dim, out_dim};
-        }
+        std::tuple<size_t, size_t> getDimensions() const;
 
-        xt::xarray<float> getWeights() const {
-            return weights;
-        }
+        xt::xarray<float> getWeights() const;
 
     private:
         size_t in_dim, out_dim;                         // input and output dimensions
@@ -46,40 +37,20 @@ namespace cnn {
         xt::xarray<float> weights;
     };
 
-
-    class CNN {
+    // perceptron
+    class Perceptron {
     public:
-        CNN() : n_layers{}, layers{}, features{} {};
+        Perceptron();
 
-        void addLayer(std::function<double(float)> activation) {
-            Layer new_layer{};
-            layers.push_back((new_layer));
-        }
+        // void addLayer(std::function<double(float)> activation);
 
-        void addLayer(Activation activation) {
-            Layer new_layer{};
-            layers.push_back((new_layer));
-        }
+        void addLayer(Activation activation);
 
-        void train() {
-            std::cout << "\nALERT: TRAINING NOT YET IMPLEMENTED\n";
-            return;
-        }
+        bool train();
 
-        size_t predict() {
-            std::cout << "\nALERT: PREDICTION NOT YET IMPLEMENTED\n";
-            return 0;
-        }
+        size_t predict();
 
-        std::vector<xt::xarray<float>> collectWeights() {
-            // xt::xarray<float> res;
-            std::vector<xt::xarray<float>> res;
-            for (const auto &layer : layers) {
-                res.push_back(layer.getWeights());
-            }
-
-            return res;
-        }
+        std::vector<xt::xarray<float>> collectWeights();
 
     private:
         size_t n_layers{};
