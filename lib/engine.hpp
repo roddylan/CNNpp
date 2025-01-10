@@ -40,11 +40,11 @@ namespace cnn {
     // perceptron
     class Perceptron {
     public:
-        Perceptron();
+        Perceptron(size_t n_ft);
 
         // void addLayer(std::function<double(float)> activation);
 
-        void addLayer(Activation activation);
+        void addLayer(Activation activation, size_t out = 1);
 
         bool train();
 
@@ -55,6 +55,7 @@ namespace cnn {
     private:
         size_t n_layers{};
         std::vector<Layer> layers;
+        const size_t n_ft;
         
         // matrix of n features for m samples (m x n) (r x c)
         // TODO: dont use ptr
