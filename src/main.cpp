@@ -12,11 +12,13 @@ int main() {
     net.addLayer(Activation::none);
 
     std::vector<size_t> s{2,2};
-    xt::xarray<int> a{s};
+    xt::xarray<float> a{s};
 
     xt::random::seed(CONSTANT::SEED);
+    std::cout << a << std::endl;
     // xt::random::rand()
     double bound = 1 / std::sqrt(4);
+    std::cout << "bound=" << bound << std::endl;
     a = xt::random::rand(
         a.shape(),
         -bound,
