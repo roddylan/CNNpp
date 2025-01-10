@@ -12,10 +12,9 @@ project(CNNpp VERSION 0.0.1)
 # add libraries
 # include_directories(${LIB_DIR})
 # include_directories(${INC_DIR})
-target_include_directories(dev PRIVATE ${LIB_DIR})
-target_include_directories(dev PUBLIC ${INC_DIR})
 
-set(HEADER_FILES ${INC_DIR}/utils.hpp ${INC_DIR}/consants.hpp ${LIB_DIR}/engine.hpp)
+set(HEADER_FILES ${INC_DIR}/utils.hpp ${INC_DIR}/constants.hpp ${LIB_DIR}/engine.hpp)
+set(HSOURCE_FILES ${LIB_DIR}/engine.cpp)
 # set(TEMP_SOURCES ${SRC_DIR}/main.cpp )
 # set(TEMP_SOURCES ${SRC_DIR}/main.cpp )
 # target_include_directories(dev PRIVATE ${LIB_DIR})
@@ -23,7 +22,9 @@ set(HEADER_FILES ${INC_DIR}/utils.hpp ${INC_DIR}/consants.hpp ${LIB_DIR}/engine.
 
 
 # TODO: train + predict exec
-add_executable(dev src/main.cpp ${HEADER_FILES})
+add_executable(dev src/main.cpp ${HSOURCE_FILES} ${HEADER_FILES})
+target_include_directories(dev PRIVATE ${LIB_DIR})
+target_include_directories(dev PUBLIC ${INC_DIR})
 
 # add dependencies (CPM)
 include(cmake/CPM.cmake)

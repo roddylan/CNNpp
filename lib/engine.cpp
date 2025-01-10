@@ -27,9 +27,11 @@ cnn::Layer::Layer(const size_t &in_dim, const size_t &out_dim, const Activation 
     // weight initializing via Xavier
     double bound = 1 / std::sqrt(in_dim);
     
-    weights = xt::random::rand(weights.shape(), -bound, bound);
+    weights = xt::random::rand<float>(weights.shape(), -bound, bound);
 
 }
+
+// cnn::Layer::~Layer() {}
 
 
 std::tuple<size_t, size_t> cnn::Layer::getDimensions() const {
@@ -59,7 +61,7 @@ void cnn::Perceptron::addLayer(const Activation &activation, const size_t &out) 
         in_dim = std::get<1>(layers.back().getDimensions());
     }
 
-    Layer new_layer{};
+    Layer new_layer{in_dim, out_dim, activation};
     layers.push_back((new_layer));
     ++n_layers;
 }

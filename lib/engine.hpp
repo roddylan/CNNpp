@@ -17,7 +17,7 @@ namespace cnn {
     public:
         // TODO: set xarray dims
         Layer() = default;
-        ~Layer();
+        ~Layer() {}
         
         // Layer(size_t in_dim, size_t out_dim, std::function<double(float)> activation);
         
