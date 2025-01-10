@@ -8,11 +8,13 @@
 #include <xtensor.hpp>
 #include <functional>
 #include <vector>
+#include <tuple>
 
 
 namespace cnn {
     class Layer {
     public:
+        // TODO: set xarray dims
         Layer() = default;
         Layer(size_t in_dim, size_t out_dim, std::function<double(float)> activation) 
         : in_dim{in_dim}, out_dim{out_dim}, activation{activation} {
@@ -24,6 +26,14 @@ namespace cnn {
         : in_dim{in_dim}, out_dim{out_dim} {
             this->activation = actutils::activation.at(activation);
             this->backprop = actutils::backprop.at(activation);
+        }
+
+        std::tuple<size_t, size_t> getDimensions() const {
+            return std::tuple<size_t, size_t>{in_dim, out_dim};
+        }
+
+        xt::xarray<float> getWeights() const {
+            return weights;
         }
 
     private:
@@ -43,10 +53,32 @@ namespace cnn {
 
         void addLayer(std::function<double(float)> activation) {
             Layer new_layer{};
+            layers.push_back((new_layer));
         }
 
         void addLayer(Activation activation) {
             Layer new_layer{};
+            layers.push_back((new_layer));
+        }
+
+        void train() {
+            std::cout << "\nALERT: TRAINING NOT YET IMPLEMENTED\n";
+            return;
+        }
+
+        size_t predict() {
+            std::cout << "\nALERT: PREDICTION NOT YET IMPLEMENTED\n";
+            return 0;
+        }
+
+        std::vector<xt::xarray<float>> collectWeights() {
+            // xt::xarray<float> res;
+            std::vector<xt::xarray<float>> res;
+            for (const auto &layer : layers) {
+                res.push_back(layer.getWeights());
+            }
+
+            return res;
         }
 
     private:
