@@ -15,7 +15,7 @@ project(CNNpp VERSION 0.0.1)
 target_include_directories(dev PRIVATE ${LIB_DIR})
 target_include_directories(dev PUBLIC ${INC_DIR})
 
-set(HEADER_FILES ${INC_DIR}/utils.hpp ${LIB_DIR}/engine.hpp)
+set(HEADER_FILES ${INC_DIR}/utils.hpp ${INC_DIR}/consants.hpp ${LIB_DIR}/engine.hpp)
 # set(TEMP_SOURCES ${SRC_DIR}/main.cpp )
 # set(TEMP_SOURCES ${SRC_DIR}/main.cpp )
 # target_include_directories(dev PRIVATE ${LIB_DIR})

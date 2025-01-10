@@ -1,4 +1,7 @@
 #include "engine.hpp"
+#include "xtensor/xmath.hpp"
+#include "xtensor/xrandom.hpp"
+#include <constants.hpp>
 #include <stdexcept>
 #include <tuple>
 
@@ -10,11 +13,22 @@
 //     std::cout << "\nALERT: backprop not set\n";
 // }
 
-cnn::Layer::Layer(size_t in_dim, size_t out_dim, Activation activation) 
+cnn::Layer::Layer(const size_t &in_dim, const size_t &out_dim, const Activation &activation) 
         : in_dim{in_dim}, out_dim{out_dim} {
     this->activation = actutils::activation.at(activation);
     this->backprop = actutils::backprop.at(activation);
     
+    // create weights matrix
+    std::vector<size_t> shape = {in_dim, out_dim};
+    xt::xarray<float> weights(shape);
+    
+    // init with random
+    xt::random::seed(CONSTANT::SEED);
+    // weight initializing via Xavier
+    double bound = 1 / std::sqrt(in_dim);
+    
+    weights = xt::random::rand(weights.shape(), -bound, bound);
+
 }
 
 
@@ -31,7 +45,7 @@ xt::xarray<float> cnn::Layer::getWeights() const {
 // cnn perceptron
 cnn::Perceptron::Perceptron(size_t n_ft) : n_layers{}, layers{}, features{}, n_ft{n_ft} {}
 
-void cnn::Perceptron::addLayer(Activation activation, size_t out) {
+void cnn::Perceptron::addLayer(const Activation &activation, const size_t &out) {
     // arg validation
     if (out < 1) {
         throw std::invalid_argument("Received invalid output dimension value. Must be greater than 0");

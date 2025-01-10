@@ -19,9 +19,9 @@ namespace cnn {
         Layer() = default;
         ~Layer();
         
-        Layer(size_t in_dim, size_t out_dim, std::function<double(float)> activation);
+        // Layer(size_t in_dim, size_t out_dim, std::function<double(float)> activation);
         
-        Layer(size_t in_dim, size_t out_dim, Activation activation);
+        Layer(const size_t &in_dim, const size_t &out_dim, const Activation &activation);
 
         std::tuple<size_t, size_t> getDimensions() const;
 
@@ -44,7 +44,7 @@ namespace cnn {
 
         // void addLayer(std::function<double(float)> activation);
 
-        void addLayer(Activation activation, size_t out = 1);
+        void addLayer(const Activation &activation, const size_t &out = 1);
 
         bool train();
 
