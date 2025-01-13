@@ -1,9 +1,11 @@
 #ifndef UTILS_HPP
 #define UTILS_HPP
+#include "xtensor/xtensor_forward.hpp"
 #include <functional>
 #include <unordered_map>
 #include <cmath>
 #include <iostream>
+#include <xtensor.hpp>
 
 
 enum class Activation {
@@ -88,7 +90,5 @@ namespace actutils {
         {Activation::tanh, BFunctors::tanh},
     };
 }
-
-
 
 #endif
