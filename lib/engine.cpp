@@ -1,4 +1,6 @@
 #include "engine.hpp"
+#include "xtensor-blas/xlinalg.hpp"
+#include "xtensor/xbuilder.hpp"
 #include "xtensor/xmath.hpp"
 #include "xtensor/xrandom.hpp"
 #include "xtensor/xtensor_forward.hpp"
@@ -46,7 +48,9 @@ xt::xarray<float> cnn::Layer::getWeights() const {
 
 
 // cnn perceptron
-cnn::Perceptron::Perceptron(size_t n_ft) : n_layers{}, layers{}, n_ft{n_ft} {}
+cnn::Perceptron::Perceptron(size_t n_ft) : n_layers{}, layers{}, n_ft{n_ft} {
+    ++n_ft;
+}
 
 void cnn::Perceptron::addLayer(const Activation &activation, const size_t &out) {
     // arg validation
@@ -88,6 +92,22 @@ std::vector<xt::xarray<float>> cnn::Perceptron::collectWeights() {
     return res;
 }
 
+void cnn::Perceptron::preprocess(xt::xarray<float> &data, const bool &bias_exists) {
+    // data -> in_dim x 1
+
+    // if bias already included
+    // data.reshape({});
+    data.reshape({-1, 1});
+    
+    if (!bias_exists) {
+        xt::xtensor_fixed<float, xt::xshape<1, 1>> one = {1.0};
+        data = xt::vstack(xt::xtuple(
+            data,
+            one
+        ));
+    }
+}
+
 
 // forward pass
 
@@ -97,9 +117,9 @@ xt::xarray<float> cnn::Layer::forward(const xt::xarray<float> &in) {
     // W - weight matrix (in x out)
     // x -> ft (1 x in)
     // -> 1 x out 
-    
+    xt::xarray<float> out = xt::linalg::dot(in, this->weights);
 
-    return in;
+    return out;
 }
 
 xt::xarray<float> cnn::Perceptron::forward(const xt::xarray<float> &in) {

@@ -61,6 +61,10 @@ namespace cnn {
         std::vector<Layer> layers;
         const size_t n_ft;
         
+        // conform data to have bias term included in ft, bias=false -> bias term not alr included
+        void preprocess(xt::xarray<float> &data, const bool &bias_exists=false);
+        // void handleData(xt::xarray<float> *data, const bool &bias_exists=false);
+        
         // matrix of n features for m samples (m x n) (r x c)
         // TODO: dont use ptr
         // std::vector<std::unique_ptr<xt::xarray<float>>> features;
