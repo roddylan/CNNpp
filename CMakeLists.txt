@@ -36,12 +36,19 @@ CPMAddPackage(
 )
 
 CPMAddPackage(
+    NAME xtensor-blas
+    GITHUB_REPOSITORY xtensor-stack/xtensor-blas
+    GIT_TAG 0.21.0
+)
+
+CPMAddPackage(
     NAME magic_enum
     GITHUB_REPOSITORY Neargye/magic_enum
     GIT_TAG v0.9.7
 )
 
 target_link_libraries(dev PUBLIC xtensor)
+target_link_libraries(dev PUBLIC xtensor-blas)
 
 
 

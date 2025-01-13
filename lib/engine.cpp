@@ -1,6 +1,7 @@
 #include "engine.hpp"
 #include "xtensor/xmath.hpp"
 #include "xtensor/xrandom.hpp"
+#include "xtensor/xtensor_forward.hpp"
 #include <constants.hpp>
 #include <stdexcept>
 #include <tuple>
@@ -45,7 +46,7 @@ xt::xarray<float> cnn::Layer::getWeights() const {
 
 
 // cnn perceptron
-cnn::Perceptron::Perceptron(size_t n_ft) : n_layers{}, layers{}, features{}, n_ft{n_ft} {}
+cnn::Perceptron::Perceptron(size_t n_ft) : n_layers{}, layers{}, n_ft{n_ft} {}
 
 void cnn::Perceptron::addLayer(const Activation &activation, const size_t &out) {
     // arg validation
@@ -85,4 +86,27 @@ std::vector<xt::xarray<float>> cnn::Perceptron::collectWeights() {
     }
 
     return res;
+}
+
+
+// forward pass
+
+xt::xarray<float> cnn::Layer::forward(const xt::xarray<float> &in) {
+    // TODO:finish
+    // xW + b
+    // W - weight matrix (in x out)
+    // x -> ft (1 x in)
+    // -> 1 x out 
+    
+
+    return in;
+}
+
+xt::xarray<float> cnn::Perceptron::forward(const xt::xarray<float> &in) {
+    xt::xarray<float> cur{in};
+    for (cnn::Layer &layer : layers) {
+        cur = layer.forward(cur);
+    }
+
+    return cur;
 }

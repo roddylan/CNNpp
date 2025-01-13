@@ -27,6 +27,8 @@ namespace cnn {
 
         xt::xarray<float> getWeights() const;
 
+        xt::xarray<float> forward(const xt::xarray<float> &in);
+
     private:
         size_t in_dim, out_dim;                         // input and output dimensions
         std::function<double(float)> activation;        // activation functor
@@ -46,6 +48,8 @@ namespace cnn {
 
         void addLayer(const Activation &activation, const size_t &out = 1);
 
+        xt::xarray<float> forward(const xt::xarray<float> &in);
+
         bool train();
 
         size_t predict();
@@ -59,7 +63,7 @@ namespace cnn {
         
         // matrix of n features for m samples (m x n) (r x c)
         // TODO: dont use ptr
-        std::vector<std::unique_ptr<xt::xarray<float>>> features;
+        // std::vector<std::unique_ptr<xt::xarray<float>>> features;
 
     };
 }
