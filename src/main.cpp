@@ -19,7 +19,10 @@ int main() {
     // xt::xarray<float> b{s, {1, 1, 1, 1}};
     xt::xarray<int> a = {1, 1};
     // a.reshape({2, 1});
-    xt::xarray<int> b = {{2, 2}};
+    // xt::xarray<int> b = {{2, 2}};
+    // xt::xarray<int> b = {1};
+    xt::xtensor_fixed<int, xt::xshape<1, 1>> b = {1};
+    // xt::xarray<int> c = {1};
 
     // xt::random::seed(CONSTANT::SEED);
     // std::cout << a << std::endl;
@@ -38,8 +41,15 @@ int main() {
     // std::cout << xt::linspace(0, 10, 100) << std::endl;
     std::cout << "a.shape -> (" << a.shape(0) << ", " << a.shape(1) << ")\n";
     std::cout << "b.shape -> (" << b.shape(0) << ", " << b.shape(1) << ")\n\n";
+    a.reshape({-1,1});
+    // b.reshape({-1,1});
+    std::cout << "a.shape -> (" << a.shape(0) << ", " << a.shape(1) << ")\n";
+    std::cout << "b.shape -> (" << b.shape(0) << ", " << b.shape(1) << ")\n\n";
     
+    xt::xarray<int> v = xt::vstack(xt::xtuple(
+        a, b
+    ));
     
-    std::cout << "a.T=\n" << xt::transpose(a) << std::endl << std::endl;
-    std::cout << "b.T=\n" << xt::transpose(b) << std::endl << std::endl;
+    std::cout << "\n" << v << "\n";
+    std::cout << v.shape(0) << ", " << v.shape(1) << "\n";
 }
